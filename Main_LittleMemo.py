@@ -1,3 +1,4 @@
+__version__ = "1.0.0"
 import sys
 import json
 import os
@@ -31,6 +32,11 @@ THEMES = {
     "森林绿": ("rgba(30, 50, 40, 200)", "#0ba360", "#3cba92"),
     "极客黑": ("rgba(10, 10, 10, 220)", "#434343", "#000000")
 }
+
+DEFAULT_W=287
+DEFAULT_H=439
+DEFAULT_X=1939
+DEFAULT_Y=783
 
 class StrikeoutLineEdit(QLineEdit):
     def __init__(self, *args, **kwargs):
@@ -369,7 +375,8 @@ class StickyNote(QWidget):
 
         # 顶部栏
         top_layout = QHBoxLayout()
-        self.menu_btn = QPushButton("☰")
+        self.menu_btn = QPushButton("🎨")
+        self.menu_btn.setStyleSheet("font-size: 18 px; border: none;")
         self.close_btn = QPushButton("×")
         btn_style = "QPushButton { color: rgba(255, 255, 255, 150); border: none; font-size: 18px; background: transparent; } QPushButton:hover { color: white; background: rgba(255, 255, 255, 30); border-radius: 4px; }"
         self.menu_btn.setStyleSheet(btn_style)
@@ -631,7 +638,7 @@ class StickyNote(QWidget):
                 with open(CONFIG_FILE, "r", encoding="utf-8") as f:
                     c = json.load(f)
                     # 恢复位置和尺寸 (287x439 是你的黄金比例)
-                    self.setGeometry(c.get("x", 1939), c.get("y", 783), c.get("w", 287), c.get("h", 439))
+                    self.setGeometry(c.get("x", DEFAULT_X), c.get("y", DEFAULT_Y), c.get("w", DEFAULT_W), c.get("h", DEFAULT_H))
                     # 恢复主题
                     self.apply_theme(THEMES.get(c.get("theme"), THEMES["经典深"]))
                     return
@@ -640,7 +647,7 @@ class StickyNote(QWidget):
         
         # 2. 如果文件不存在或读取失败，执行初始化
         # 设置默认大小
-        self.setGeometry(100, 100, 287, 439)
+        self.setGeometry(DEFAULT_X, DEFAULT_Y, DEFAULT_W, DEFAULT_H)
         # 设置默认主题
         self.apply_theme(THEMES["经典深"])
         
