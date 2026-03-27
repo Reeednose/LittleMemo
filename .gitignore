@@ -14,3 +14,4 @@ dist/
 # 忽略个人数据（这样你的私密便签不会传到网上）
 notes.json
 config.json
+style.qss
